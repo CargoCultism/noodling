@@ -1,0 +1,30 @@
+﻿# Taken in part or whole from wikipedia under Creative Commons Attribution-ShareAlike 4.0 International License, 
+# https://en.wikipedia.org/wiki/Wikipedia:Text_of_the_Creative_Commons_Attribution-ShareAlike_4.0_International_License
+# https://en.wikipedia.org/wiki/Lists_of_fictional_locations
+
+Braavos
+Pentos
+Volantis
+Lorath 
+Myr 
+Norvos 
+Qohor 
+Tyrosh
+
+Ankh-Morpork
+Sto Helit
+Cori Celesti
+Koom Valley
+Sto Lat
+Sto Kerrig
+
+Atlantis
+Talisnat
+Naltatis
+Santalit
+Tisalant
+Satalint
+Sitaltan
+Tintasal
+Tansalit
+Anstlati
