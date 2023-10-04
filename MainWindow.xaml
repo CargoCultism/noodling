@@ -6,7 +6,15 @@
         xmlns:local="clr-namespace:noodling"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+    <Window.DataContext>
+       <local:MainViewModel/>
+    </Window.DataContext>
     <Grid>
-
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Button Grid.Row="0" Command="{Binding AsdfCommand}">Test</Button>
+        <TextBox Grid.Row="1" Text="{Binding MyInt}"/>
     </Grid>
 </Window>
