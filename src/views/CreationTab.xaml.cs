@@ -1,4 +1,5 @@
-﻿using System;
+﻿using noodling.viewmodels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,10 +19,11 @@ namespace noodling.src.views
     /// <summary>
     /// Interaction logic for TabCreation.xaml
     /// </summary>
-    public partial class TabCreation : UserControl
+    public partial class CreationTab: UserControl
     {
-        public TabCreation()
+        public CreationTab()
         {
+            this.DataContext = new CreationTabViewModel();
             InitializeComponent();
         }
     }
