@@ -1,5 +1,7 @@
-﻿using System;
+﻿using noodling.src.data;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -43,11 +45,76 @@ namespace noodling.viewmodels
                 NotifyPropertyChanged();
             }
         }
+
+        private ObservableCollection<Continent> world;
+
+        public ObservableCollection<Continent> World
+        {
+            get { return world; }
+            set
+            {
+                this.world = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        private Continent europe;
+
+        public Continent Europe
+        {
+            get { return europe; }
+            set
+            {
+                this.europe = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        public ObservableCollection<Country> Countries2 { get; set; }
+
+        private Country germany;
+
+        public Country Germany
+        {
+            get { return germany; }
+            set
+            {
+                this.germany = value;
+                NotifyPropertyChanged();
+            }
+        }
+
         public CreationTabViewModel()
         {
             numberOfContinents = 3;
             numberOfCountries = 3;
             numberOfCities = 5;
+
+            var cities = new List<City>
+            {
+                new City { Name = "London" },
+                new City { Name = "Manchester"},
+                new City { Name = "Glasgow"}
+            };
+            Country England = new Country(cities) { Name = "England" };
+            var cities2 = new List<City>
+            {
+                new City { Name = "Paris" },
+                new City { Name = "Lyon"},
+                new City { Name = "Toulouse"}
+            };
+            Country France = new Country(cities2) { Name = "France" };
+            var cities3 = new List<City>
+            {
+                new City { Name = "Berlin" },
+                new City { Name = "München"},
+                new City { Name = "Düsseldorf"}
+            };
+            Germany = new Country(cities3) { Name = "Germany" };
+            var someEuropeanCountries = new List<Country>{ England, France, Germany};
+            Europe = new Continent(someEuropeanCountries) { Name = "Europe" };
+            World = new ObservableCollection<Continent> { Europe };
+            Countries2 = new ObservableCollection<Country>(someEuropeanCountries);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
