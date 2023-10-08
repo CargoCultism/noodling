@@ -8,10 +8,25 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              x:Name="Root">
+    <UserControl.Resources>
+        <DataTemplate x:Key="leaves">
+            <TextBlock Text="{Binding Path=Name}"/>
+        </DataTemplate>
+        <HierarchicalDataTemplate x:Key="middleItems"
+                                  ItemsSource="{Binding Countries}"
+                                  ItemTemplate="{StaticResource leaves}">
+            <TextBlock Text="{Binding Path=Name}"/>
+        </HierarchicalDataTemplate>
+        <HierarchicalDataTemplate x:Key="leafItem"
+                                  ItemsSource="{Binding Cities}"
+                                  ItemTemplate="{StaticResource middleItems}">
+            <TextBlock Text="{Binding Path=Name}"/>
+        </HierarchicalDataTemplate>
+    </UserControl.Resources>
     <Grid Height="450" Width="800" Background="AliceBlue">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="60"/>
         </Grid.RowDefinitions>
@@ -23,9 +38,9 @@
             <Label Content="Number of Cities per Country"/>
             <local1:NumericUpDown IsNonNegative="True" Number="{Binding ElementName=Root, Path=DataContext.NumberOfCities}"/>
         </StackPanel>
-        <TreeView Grid.Row="1" ItemsSource="{Binding ElementName=Root, Path=DataContext.World}" MinHeight="50">
+        <TreeView Grid.Row="1" ItemsSource="{Binding ElementName=Root, Path=DataContext.World}" MinHeight="50" >
             <TreeView.ItemTemplate>
-                <HierarchicalDataTemplate ItemsSource="{Binding Countries}">
+                <HierarchicalDataTemplate ItemsSource="{Binding Countries}" ItemTemplate="{StaticResource leafItem}">
                     <TextBlock Text="{Binding Name}"/>
                 </HierarchicalDataTemplate>
             </TreeView.ItemTemplate>
