@@ -13,6 +13,20 @@ namespace noodling.viewmodels
 {
     public class CreationTabViewModel : INotifyPropertyChanged
     {
+        public RelayCommand<IGeographicalEntity> SelectedEntityChanged { get; set; }
+
+        private IGeographicalEntity selectedEntity;
+
+        public IGeographicalEntity SelectedEntity
+    {
+            get { return selectedEntity; }
+            set
+            {
+                this.selectedEntity = value;
+                NotifyPropertyChanged();
+            }
+        }
+
         private byte numberOfContinents;
         public byte NumberOfContinents
         {
@@ -85,7 +99,7 @@ namespace noodling.viewmodels
         }
 
         public CreationTabViewModel()
-        {
+        { 
             numberOfContinents = 3;
             numberOfCountries = 3;
             numberOfCities = 5;
@@ -115,6 +129,13 @@ namespace noodling.viewmodels
             Europe = new Continent(someEuropeanCountries) { Name = "Europe" };
             World = new ObservableCollection<Continent> { Europe };
             Countries2 = new ObservableCollection<Country>(someEuropeanCountries);
+
+            SelectedEntityChanged = new RelayCommand<IGeographicalEntity>(c => changeSelection(c), null);
+        }
+
+        private void changeSelection(object c)
+        {
+            this.SelectedEntity = c as IGeographicalEntity;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

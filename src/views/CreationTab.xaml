@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:noodling.src.views" 
              xmlns:local1="clr-namespace:noodling.usercontrols"
+             xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              x:Name="Root">
@@ -13,22 +14,17 @@
             <TextBlock Text="{Binding Path=Name}"/>
         </DataTemplate>
         <HierarchicalDataTemplate x:Key="middleItems"
-                                  ItemsSource="{Binding Countries}"
+                                  ItemsSource="{Binding Cities}"
                                   ItemTemplate="{StaticResource leaves}">
             <TextBlock Text="{Binding Path=Name}"/>
         </HierarchicalDataTemplate>
-        <HierarchicalDataTemplate x:Key="leafItem"
-                                  ItemsSource="{Binding Cities}"
-                                  ItemTemplate="{StaticResource middleItems}">
-            <TextBlock Text="{Binding Path=Name}"/>
-        </HierarchicalDataTemplate>
     </UserControl.Resources>
+
     <Grid Height="450" Width="800" Background="AliceBlue">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="60"/>
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal" Grid.Row="0">
             <Label Content="Number of Continents"/>
@@ -38,24 +34,30 @@
             <Label Content="Number of Cities per Country"/>
             <local1:NumericUpDown IsNonNegative="True" Number="{Binding ElementName=Root, Path=DataContext.NumberOfCities}"/>
         </StackPanel>
-        <TreeView Grid.Row="1" ItemsSource="{Binding ElementName=Root, Path=DataContext.World}" MinHeight="50" >
+        <TreeView Grid.Row="1" ItemsSource="{Binding World}" MinHeight="50" x:Name="TreeView">
+            <behaviors:Interaction.Triggers>
+                <behaviors:EventTrigger EventName="SelectedItemChanged" SourceName="TreeView">
+                    <behaviors:InvokeCommandAction Command="{Binding SelectedEntityChanged}" CommandParameter="{Binding ElementName=TreeView, Path=SelectedItem}"/>
+                </behaviors:EventTrigger>
+            </behaviors:Interaction.Triggers>
             <TreeView.ItemTemplate>
-                <HierarchicalDataTemplate ItemsSource="{Binding Countries}" ItemTemplate="{StaticResource leafItem}">
+                <HierarchicalDataTemplate ItemsSource="{Binding Countries}" ItemTemplate="{StaticResource middleItems}">
                     <TextBlock Text="{Binding Name}"/>
                 </HierarchicalDataTemplate>
             </TreeView.ItemTemplate>
         </TreeView>
-
-        <ListView Grid.Row="2" ItemsSource="{Binding ElementName=Root, Path=DataContext.SelectedCountry}">
-            <ListView.ItemTemplate>
-                <HierarchicalDataTemplate>
-                    <TextBlock Text="{Binding Name}"/>
-                </HierarchicalDataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-        <Button Grid.Row="2" HorizontalAlignment="Right">
-            <Label Content="Create"/>
-        </Button>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Text="{Binding SelectedEntity.Name}" Background="Aquamarine" HorizontalAlignment="Right"/>
+            <Border Grid.Column="1" HorizontalAlignment="Stretch"/>
+            <Button Width="120" Grid.Column="2">
+                <Label Content="Create"/>
+            </Button>
+        </Grid>
 
 
     </Grid>
