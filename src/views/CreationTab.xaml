@@ -46,7 +46,7 @@
             </TreeView.ItemTemplate>
         </TreeView>
 
-        <ListView Grid.Row="2" ItemsSource="{Binding ElementName=Root, Path=DataContext.Countries2}">
+        <ListView Grid.Row="2" ItemsSource="{Binding ElementName=Root, Path=DataContext.SelectedCountry}">
             <ListView.ItemTemplate>
                 <HierarchicalDataTemplate>
                     <TextBlock Text="{Binding Name}"/>
