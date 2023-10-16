@@ -13,7 +13,8 @@ namespace noodling.viewmodels
 {
     public class CreationTabViewModel : INotifyPropertyChanged
     {
-        public RelayCommand<IGeographicalEntity> SelectedEntityChanged { get; set; }
+        public RelayCommand<IGeographicalEntity> SelectedEntityChangedCommand { get; set; }
+        public RelayCommand<object> SaveCommand { get; set; }
 
         private IGeographicalEntity selectedEntity;
 
@@ -130,7 +131,13 @@ namespace noodling.viewmodels
             World = new ObservableCollection<Continent> { Europe };
             Countries2 = new ObservableCollection<Country>(someEuropeanCountries);
 
-            SelectedEntityChanged = new RelayCommand<IGeographicalEntity>(c => changeSelection(c), null);
+            SelectedEntityChangedCommand = new RelayCommand<IGeographicalEntity>(c => changeSelection(c), null);
+            //SaveCommand = new RelayCommand<object>((c) => save(), null);
+        }
+
+        private void save()
+        {
+            throw new NotImplementedException();
         }
 
         private void changeSelection(object c)
