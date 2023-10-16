@@ -54,7 +54,7 @@
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Column="0" Text="{Binding SelectedEntity.Name}" Background="Aquamarine" HorizontalAlignment="Right"/>
             <Border Grid.Column="1" HorizontalAlignment="Stretch"/>
-            <Button Width="120" Grid.Column="2">
+            <Button Width="120" Grid.Column="2" Command="{Binding SaveCommand}">
                 <Label Content="Create"/>
             </Button>
         </Grid>

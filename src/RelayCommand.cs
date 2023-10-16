@@ -8,9 +8,9 @@ using System.Windows.Input;
 namespace noodling
 {
 
-    public class RelayCommand<T> : ICommand
+    public class RelayCommand : ICommand
     {
-        private Action<object> execute;
+        private Action execute;
         private Func<object, bool> canExecute;
 
         public event EventHandler CanExecuteChanged
@@ -19,20 +19,37 @@ namespace noodling
             remove { CommandManager.RequerySuggested -= value; }
         }
 
-        public RelayCommand(Action<object> execute, Func<object, bool> canExecute = null)
+        public RelayCommand(Action execute)
         {
             this.execute = execute;
-            this.canExecute = canExecute;
         }
 
         public bool CanExecute(object parameter)
         {
-            return this.canExecute == null || this.canExecute(parameter);
+            return true;
         }
 
-        public void Execute(object parameter)
+        public virtual void Execute(object parameter)
         {
-            this.execute(parameter);
+            this.execute();
+        }
+    }
+
+    public class RelayCommand<T> : RelayCommand where T : class
+    {
+        private readonly Action<T> execute;
+
+        public RelayCommand(Action<T> execute) : base(null)
+        {
+            this.execute = execute;
+        }
+
+        public override void Execute(object parameter)
+        {
+            if(execute != null)
+            {
+                execute(parameter as T);
+            }
         }
     }
 }
