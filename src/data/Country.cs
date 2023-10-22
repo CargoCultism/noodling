@@ -8,15 +8,15 @@ using System.Threading.Tasks;
 
 namespace noodling.src.data
 {
-    public abstract class IGeographicalEntity
+    public abstract class GeographicalEntity
     {
         public string Name { get; set; }
     }
-    public class City : IGeographicalEntity
+    public class City : GeographicalEntity
     {
 
     }
-    public class Country : IGeographicalEntity
+    public class Country : GeographicalEntity
     {
         public ObservableCollection<City> Cities { get; set; }
 
@@ -30,7 +30,7 @@ namespace noodling.src.data
         }
     }
 
-    public class Continent : IGeographicalEntity
+    public class Continent : GeographicalEntity
     {
         public ObservableCollection<Country> Countries { get; set; }
 

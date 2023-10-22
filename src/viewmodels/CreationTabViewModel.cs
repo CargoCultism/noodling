@@ -1,4 +1,5 @@
-﻿using noodling.src.data;
+﻿using noodling.Db;
+using noodling.src.data;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,12 +14,12 @@ namespace noodling.viewmodels
 {
     public class CreationTabViewModel : INotifyPropertyChanged
     {
-        public RelayCommand<IGeographicalEntity> SelectedEntityChangedCommand { get; set; }
+        public RelayCommand<GeographicalEntity> SelectedEntityChangedCommand { get; set; }
         public RelayCommand SaveCommand { get; set; }
 
-        private IGeographicalEntity selectedEntity;
+        private GeographicalEntity selectedEntity;
 
-        public IGeographicalEntity SelectedEntity
+        public GeographicalEntity SelectedEntity
     {
             get { return selectedEntity; }
             set
@@ -28,6 +29,7 @@ namespace noodling.viewmodels
             }
         }
 
+        #region properties
         private byte numberOfContinents;
         public byte NumberOfContinents
         {
@@ -98,6 +100,7 @@ namespace noodling.viewmodels
                 NotifyPropertyChanged();
             }
         }
+        #endregion
 
         public CreationTabViewModel()
         { 
@@ -131,18 +134,27 @@ namespace noodling.viewmodels
             World = new ObservableCollection<Continent> { Europe };
             Countries2 = new ObservableCollection<Country>(someEuropeanCountries);
 
-            SelectedEntityChangedCommand = new RelayCommand<IGeographicalEntity>(c => changeSelection(c));
+            SelectedEntityChangedCommand = new RelayCommand<GeographicalEntity>(c => changeSelection(c));
             SaveCommand = new RelayCommand(() => save());
         }
 
         private void save()
         {
+            var cities = new List<City>();
+            foreach(var c in Countries2) 
+            { 
+                foreach( var d2 in c.Cities )
+                {
+                    cities.Add(d2);
+                }
+            }
+            WorldContext w = new WorldContext(cities);
             ;
         }
 
         private void changeSelection(object c)
         {
-            this.SelectedEntity = c as IGeographicalEntity;
+            this.SelectedEntity = c as GeographicalEntity;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
