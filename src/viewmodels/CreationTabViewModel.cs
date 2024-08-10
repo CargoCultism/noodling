@@ -1,5 +1,4 @@
-﻿using noodling.Db;
-using noodling.src.data;
+﻿using noodling.src.data;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -148,8 +147,6 @@ namespace noodling.viewmodels
                     cities.Add(d2);
                 }
             }
-            WorldContext w = new WorldContext(cities);
-            ;
         }
 
         private void changeSelection(object c)
